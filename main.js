@@ -7,15 +7,9 @@ var main = function(input) {
 
     i_select = split[1].replace(/\n| /g,'').split(',')
     i_from = split[2].replace(/\n| /g,'').split(',')
-    i_where_r = split[3].replace(/\n/g,'').split('AND ')
+    i_where = split[3].replace(/\n/g,'').split('AND ')
     i_groupby = split[4].replace(/\n| /g,'').split(',')
 
-    // additional whitespace removal for where
-    i_where = [];
-    for (var i = 0; i < i_where_r.length; i++){
-      i_where[i] = i_where_r[i].replace(/ /g,'')
-    }
-    
     // database -> endpoint
 
     endpoint = '0.0.0.0:9200/' + i_from + '/_search?'
@@ -34,8 +28,10 @@ var main = function(input) {
     // anything in where becomes the filter (in order), currently only supports =, should add 'in' soon
     filters = []
     for (var i = 0; i < i_where.length; i++) {
-        filters.push(i_where[i].split('='))
+        filters.push(i_where[i].replace(/\(|\)/g,'').split(/= |in|,/))
     }
+
+    // make the object
 
     a = agg_wrap(where_obj(filters,groupby_obj(i_groupby,last_filter_obj())))
 
@@ -70,19 +66,47 @@ var groupby_obj = function(array,object) {
 var where_obj = function(array,object) {
     var dis_array = array.slice(0);
     if (dis_array.length === 1) {
-        obj = {}, term = {};
+        obj = {};
         w = dis_array[0]
-        term[w[0]] = w[1].replace(/\\|\'/g,'')
-        w_name = 'where_' + w[0] + '_' + term[w[0]];
-        obj[w_name] = { "filter" : { "term" : term}, "aggs" : object };
+        tw = w[0].replace(/ /g,'')
+        if (w.length === 2){
+          var term = {};
+          term[tw] = w[1].replace(/\\|\'| /g,'')
+          w_name = 'where_' + tw + '_' + term[tw];
+          obj[w_name] = { "filter" : { "term" : term}, "aggs" : object };
+        }
+        else {
+          terms = []
+          for (var t = 0; t < w.length - 1; t++){
+            var term = {};
+            term[tw] = w[t+1].replace(/\\|\'| /g,'');
+            terms.push({ "term" : term })
+          }
+          w_name = 'where_' + tw + '_multiple';
+          obj[w_name] = { "filter" : { "and" : terms}, "aggs" : object };
+        }
         return obj;
       }
     else {
         var aggs = {}; // important to use var here to scope properly
         w = dis_array.shift();
-        term[w[0]] = w[1].replace(/\\|\'/g,'')
-        w_name = 'where_' + w[0] + '_' + term[w[0]];
-        aggs[w_name] = { "filter" : { "term" : term}, "aggs" : where_obj(dis_array,object) };
+        tw = w[0].replace(/ /g,'')
+        if (w.length === 2){
+          var term = {};
+          term[tw] = w[1].replace(/\\|\'| /g,'');
+          w_name = 'where_' + tw + '_' + term[tw];
+          aggs[w_name] = { "filter" : { "term" : term}, "aggs" : where_obj(dis_array,object) };
+        }
+        else {
+          terms = [];
+          for (var t = 0; t < w.length - 1; t++){
+            var term = {};
+            term[tw] = w[t+1].replace(/\\|\'| /g,'');
+            terms.push({ "term" : term })
+          };
+          w_name = 'where_' + tw + '_multiple';
+          aggs[w_name] = { "filter" : { "and" : terms}, "aggs" : where_obj(dis_array,object) };
+        }
         return aggs;
       }
 }
