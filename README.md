@@ -3,7 +3,7 @@ sql-to-es
 
 convert SQL-like queries to Elasticsearch commands
 
-Motivation: Elasticsearch commands are confusing to write at a certain point. See the [reference](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/index.html)
+Motivation: Elasticsearch commands are confusing to write at a certain point. See [this](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-aggregations-metrics-sum-aggregation.html) as an example and see the [reference](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/index.html) for help.
 
 ### Use
 
