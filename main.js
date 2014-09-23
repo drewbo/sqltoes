@@ -67,46 +67,42 @@ var groupby_obj = function(array,object) {
 var where_obj = function(array,object) {
     var dis_array = array.slice(0);
     if (dis_array.length === 1) {
-        obj = {};
+        obj = {}, term = {}, terms = {};
         w = dis_array[0]
         tw = w[0].replace(/ /g,'')
+        term[tw] = w[1].replace(/\\|\'| /g,'')
         if (w.length === 2){
-          var term = {};
-          term[tw] = w[1].replace(/\\|\'| /g,'')
           w_name = 'where_' + tw + '_' + term[tw];
-          obj[w_name] = { "filter" : { "term" : term}, "aggs" : object };
+          obj[w_name] = { "filter" : { "term" : term} , "aggs" : object };
         }
         else {
-          terms = []
+          termsArray = []
           for (var t = 0; t < w.length - 1; t++){
-            var term = {};
-            term[tw] = w[t+1].replace(/\\|\'| /g,'');
-            terms.push({ "term" : term })
+            termsArray.push(w[t+1].replace(/ /g,'')) // purposefully not removing quotes here
           }
+          terms[tw] = termsArray;
           w_name = 'where_' + tw + '_multiple';
-          obj[w_name] = { "filter" : { "and" : terms}, "aggs" : object };
+          obj[w_name] = { "filter" : { "terms" : terms}, "aggs" : object };
         }
         return obj;
       }
     else {
-        var aggs = {}; // important to use var here to scope properly
+        var aggs = {}, term = {}, terms = {}; // important to use var here to scope properly
         w = dis_array.shift();
         tw = w[0].replace(/ /g,'')
+        term[tw] = w[1].replace(/\\|\'| /g,'');
         if (w.length === 2){
-          var term = {};
-          term[tw] = w[1].replace(/\\|\'| /g,'');
           w_name = 'where_' + tw + '_' + term[tw];
           aggs[w_name] = { "filter" : { "term" : term}, "aggs" : where_obj(dis_array,object) };
         }
         else {
-          terms = [];
+          termsArray = [];
           for (var t = 0; t < w.length - 1; t++){
-            var term = {};
-            term[tw] = w[t+1].replace(/\\|\'| /g,'');
-            terms.push({ "term" : term })
+            termsArray.push(w[t+1].replace(/ /g,'')) // purposefully not removing quotes here
           };
+          terms[tw] = termsArray;
           w_name = 'where_' + tw + '_multiple';
-          aggs[w_name] = { "filter" : { "and" : terms}, "aggs" : where_obj(dis_array,object) };
+          aggs[w_name] = { "filter" : { "terms" : terms}, "aggs" : where_obj(dis_array,object) };
         }
         return aggs;
       }
