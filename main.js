@@ -41,9 +41,10 @@ var main = function(input) {
 
 
 var last_filter_obj = function() {
-    var last_filter_object = {};
+    var last_filter_object = {}, wrapper = {};
     last_filter_object[last_filter[0]] = { "field" : last_filter[1] };
-    return last_filter_object;
+    wrapper[last_filter[0]+'_'+last_filter[1]] = last_filter_object;
+    return wrapper;
 }
 
 var groupby_obj = function(array,object) {
