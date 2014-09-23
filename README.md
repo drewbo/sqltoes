@@ -17,11 +17,11 @@ Currently user-unfriendly
 
 In node:
 
-    > m = require('./main.js')
+    > var stqltoes = require('./main.js')
     > your_input = "SELECT sum(value), year, description \n FROM database \n WHERE commodity = 'rice' AND country = 'AFG' \n GROUP BY year, description"
-    > m.main(your_input)
+    > stqltoes.main(your_input)
     0.0.0.0:9200/database/_search?
-    '{"aggs":{"where_commodity_jrice":{"filter":{"term":{"commodity":"jrice"}},"aggs":{"group_by_year":{"terms":{"field":"year"},"aggs":{"group_by_description":{"terms":{"field":"description"},"aggs":{"sum":{"field":"value"}}}}}}}}}'
+    '{"aggs":{"where_commodity_rice":{"filter":{"term":{"commodity":"rice"}},"aggs":{"where_country_AFG":{"filter":{"term":{"country":"AFG"}},"aggs":{"group_by_year":{"terms":{"field":"year"},"aggs":{"group_by_description":{"terms":{"field":"description"},"aggs":{"sum_value":{"sum":{"field":"value"}}}}}}}}}}}}'
 
 ### How it works (and what works so far)
 
