@@ -9,7 +9,7 @@ var main = function(input) {
     i_from = split[2].replace(/\n| /g,'').split(',')
     i_where = split[3].replace(/\n/g,'').split('AND ')
     i_groupby = split[4].replace(/\n| /g,'').split(',')
-
+    console.log(i_select,i_from,i_where,i_groupby)
     // database -> endpoint
 
     endpoint = '0.0.0.0:9200/' + i_from + '/_search?'
@@ -49,7 +49,10 @@ var last_filter_obj = function() {
 
 var groupby_obj = function(array,object) {
     var dis_array = array.slice(0);
-    if (dis_array.length === 1) {
+    if (dis_array.length === 0) {
+        return object;
+    }
+    else if (dis_array.length === 1) {
         obj = {};
         gb_name = 'group_by_' + dis_array[0];
         obj[gb_name] = { "terms" : { "field" : dis_array[0]}, "aggs" : object };
@@ -66,7 +69,10 @@ var groupby_obj = function(array,object) {
 
 var where_obj = function(array,object) {
     var dis_array = array.slice(0);
-    if (dis_array.length === 1) {
+    if (dis_array.length === 0) {
+        return object;
+    }
+    else if (dis_array.length === 1) {
         obj = {}, term = {}, terms = {};
         w = dis_array[0]
         tw = w[0].replace(/ /g,'')
