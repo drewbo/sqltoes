@@ -34,6 +34,6 @@ Looks for all four of the following: `SELECT, FROM, WHERE, GROUP BY` (in that or
 - Anything in the `SELECT` clause is ignored unless it is wrapped in `sum, min, max, or avg` all of which become a [final aggregation](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-aggregations-metrics-sum-aggregation.html)
 - Anything in the `FROM` clause gets added as the html endpoint
 - The `WHERE` clause supports two types of queries:
-  - `[field] = [value]` will be treated as a [term filter](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-term-filter.html)
-  - `[field] in ([value1],value[2])` will be treated as an [and filter](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-and-filter.html#query-dsl-and-filter) of term filters. I realized while typing this documentation up that it could very easily be implemented as a [terms filter](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-terms-filter.html) which I will remedy in the future.
-- Anything in the `GROUP BY`clause is treated like the second example [here](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/_executing_aggregations.html)
+  - `[field] = [value]` will be treated as a [term filter](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-term-filter.html).
+  - `[field] in ([value1],value[2])` will be treated as a [terms filter](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-terms-filter.html).
+- Anything in the `GROUP BY`clause is treated like the second example shown [here](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/_executing_aggregations.html).
