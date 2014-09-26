@@ -17,7 +17,7 @@ Currently user-unfriendly
 
 In node:
 
-    > var stqltoes = require('./main.js')
+    > var stqltoes = require('./sqltoes.js')
     > your_input = "SELECT sum(value), year, description \n FROM database \n WHERE commodity = 'rice' AND country = 'AFG' \n GROUP BY year, description"
     > stqltoes.main(your_input)
     0.0.0.0:9200/database/_search?
