@@ -10,9 +10,9 @@ Motivation: Elasticsearch commands are confusing to write at a certain point. Se
 Currently user-unfriendly
 
 - add your input
-- call `main` on your input
-- get two outputs
-  - the local database you should POST to
+- call `main` or `sqltoes` on your input
+- get one or two outputs
+  - the local database you should POST to (not in browser version)
   - a JSON object representing your query (which has been `stringified` so that it POSTs properly)
 
 In node:
@@ -22,6 +22,10 @@ In node:
     > stqltoes.main(your_input)
     0.0.0.0:9200/database/_search?
     '{"aggs":{"where_commodity_rice":{"filter":{"term":{"commodity":"rice"}},"aggs":{"where_country_AFG":{"filter":{"term":{"country":"AFG"}},"aggs":{"group_by_year":{"terms":{"field":"year"},"aggs":{"group_by_description":{"terms":{"field":"description"},"aggs":{"sum_value":{"sum":{"field":"value"}}}}}}}}}}}}'
+
+In browser:
+
+    sqlToES({select: ['sum(value)'], from: [''], where: ['commodity = rice'], groupby: ['description','year']})
 
 ### How it works (and what works so far)
 
