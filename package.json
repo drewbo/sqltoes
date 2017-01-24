@@ -1,0 +1,23 @@
+{
+  "name": "sqltoes",
+  "version": "0.1.0",
+  "description": "Convert SQL queries to Elasticsearch aggregations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drewbo/sql-to-es.git"
+  },
+  "keywords": [
+    "sql",
+    "elasticsearch"
+  ],
+  "author": "drewbo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drewbo/sql-to-es/issues"
+  },
+  "homepage": "https://github.com/drewbo/sql-to-es#readme"
+}
