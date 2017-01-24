@@ -1,9 +1,16 @@
-sql-to-es
+sqltoes (sql to ES)
 =========
 
 #### Writing elasticsearch commands is hard, writing SQL queries is...less hard
 
 Motivation: Elasticsearch commands are confusing to write at a certain point. See [this](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-aggregations-metrics-sum-aggregation.html) as an example and see the [reference](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/index.html) for help.
+
+### Installation
+
+```bash
+npm install
+```
+
 
 ### Use
 

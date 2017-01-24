@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drewbo/sql-to-es.git"
+    "url": "git+https://github.com/drewbo/sqltoes.git"
   },
   "keywords": [
     "sql",
@@ -17,7 +17,7 @@
   "author": "drewbo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/drewbo/sql-to-es/issues"
+    "url": "https://github.com/drewbo/sqltoes/issues"
   },
-  "homepage": "https://github.com/drewbo/sql-to-es#readme"
+  "homepage": "https://github.com/drewbo/sqltoes#readme"
 }
