@@ -8,35 +8,17 @@ Motivation: Elasticsearch commands are confusing to write at a certain point. Se
 ### Installation
 
 ```bash
-npm install
+npm install sqltoes
 ```
 
 
 ### Use
 
-Currently user-unfriendly
-
-- add your input
-- call `main` or `sqltoes` on your input
-- get one or two outputs
-  - the local database you should POST to (not in browser version)
-  - a JSON object representing your query (which has been `stringified` so that it POSTs properly)
-
-In node:
-
-    > var stqltoes = require('./sqltoes.js')
-    > your_input = "SELECT sum(value), year, description \n FROM database \n WHERE commodity = 'rice' AND country = 'AFG' \n GROUP BY year, description"
-    > stqltoes.main(your_input)
-    0.0.0.0:9200/database/_search?
-    '{"aggs":{"where_commodity_rice":{"filter":{"term":{"commodity":"rice"}},"aggs":{"where_country_AFG":{"filter":{"term":{"country":"AFG"}},"aggs":{"group_by_year":{"terms":{"field":"year"},"aggs":{"group_by_description":{"terms":{"field":"description"},"aggs":{"sum_value":{"sum":{"field":"value"}}}}}}}}}}}}'
-
-In browser:
-
-    sqlToES({select: ['sum(value)'], from: [''], where: ['commodity = rice'], groupby: ['description','year']})
+    sqlToES({select: ['sum(value)'], where: ['commodity = rice'], groupBy: ['description','year']})
 
 ### How it works (and what works so far)
 
-Looks for all four of the following: `SELECT, FROM, WHERE, GROUP BY` (in that order and requires them all)
+Looks for all three of the following: `SELECT, WHERE, GROUP BY` (in that order and requires them all)
 
 - Anything in the `SELECT` clause is ignored unless it is wrapped in `sum, min, max, or avg` all of which become a [final aggregation](http://www.elasticsearch.org/guide/en/elasticsearch/reference/1.x/search-aggregations-metrics-sum-aggregation.html)
 - Anything in the `FROM` clause gets added as the html endpoint
