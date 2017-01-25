@@ -4,7 +4,7 @@
   "description": "Convert SQL queries to Elasticsearch aggregations",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/drewbo/sqltoes/issues"
   },
-  "homepage": "https://github.com/drewbo/sqltoes#readme"
+  "homepage": "https://github.com/drewbo/sqltoes#readme",
+  "devDependencies": {
+    "tape": "^4.6.3"
+  }
 }
