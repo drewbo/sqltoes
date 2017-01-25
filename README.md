@@ -7,10 +7,7 @@ Motivation: Elasticsearch commands are [confusing to write](https://www.elastic.
 
 ### Installation
 
-```bash
-npm install sqltoes
-```
-
+    npm install sqltoes
 
 ### Use
 
