@@ -16,7 +16,7 @@ var sqltoes = function (input) {
   // anything in where becomes the filter (in order), currently only supports =, should add 'in' soon
   var filters = []
   for (i = 0; i < where.length; i++) {
-    filters.push(where[i].replace(/\(|\)/g, '').split(/= |in|,/))
+    filters.push(where[i].replace(/\(|\)/g, '').split(/= | in |,/))
   }
 
   // make the object (tiny hack for non grouped objects)
