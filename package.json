@@ -1,6 +1,6 @@
 {
   "name": "sqltoes",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Convert SQL queries to Elasticsearch aggregations",
   "main": "index.js",
   "scripts": {
