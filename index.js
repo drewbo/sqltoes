@@ -99,7 +99,7 @@ var whereObj = function (array, object) {
       };
       terms[tw] = termsArray
       wName = 'where_' + tw + '_multiple'
-      aggs[wName] = { 'filter': { 'terms': terms }, 'agg': whereObj(currentArray, object) }
+      aggs[wName] = { 'filter': { 'terms': terms }, 'aggs': whereObj(currentArray, object) }
     }
     return aggs
   }
