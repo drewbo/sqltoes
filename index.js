@@ -19,15 +19,10 @@ var sqltoes = function (input) {
     filters.push(where[i].replace(/\(|\)/g, '').split(/= | in |,/))
   }
 
-  // make the object (tiny hack for non grouped objects)
   if (groupBy.length) {
     var a = aggWrap(whereObj(filters, groupByObj(groupBy, lastFilterObj(lastFilter))))
   } else {
-    var temp = whereObj(filters, {})
-    var topKey = Object.keys(temp)[0]
-    a = temp[topKey]
-    a['size'] = 30
-    a.filter.terms ? delete a.filter.size : 0
+    a = aggWrap(whereObj(filters, lastFilterObj(lastFilter)))
   }
   return a
 }
