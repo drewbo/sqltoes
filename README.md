@@ -11,7 +11,16 @@ Motivation: Elasticsearch commands are [confusing to write](https://www.elastic.
 
 ### Use
 
-    sqlToES({select: ['sum(value)'], where: ['commodity = rice'], groupBy: ['description','year']})
+```js
+var sqltoes = require('sqltoes')
+var query = {select: ['sum(value)'], where: ['commodity = rice'], groupBy: ['description','year']}
+
+sqltoes(query)
+// { aggs: { where_commodity_rice: { filter: [Object], aggs: [Object] } } }
+
+JSON.stringify(sqltoes(query))
+// '{"aggs":{"where_commodity_rice":{"filter":{"term":{"commodity":"rice"}},"aggs":{"group_by_description":{"terms":{"field":"description","size":1000},"aggs":{"group_by_year":{"terms":{"field":"year","size":1000},"aggs":{"sum_value":{"sum":{"field":"value"}}}}}}}}}}'
+```
 
 ### How it works (and what works so far)
 
